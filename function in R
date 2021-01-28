@@ -1,0 +1,22 @@
+makeCamatrix <- function(x = matrix()){
+  fmv <- NULL
+  set <- function(y){
+         x <<- y
+         fmv <<- NULL
+     }
+     get <- function() {x} 
+     setInverse <- function(inverse) {fmv <<- inverse}
+     getInverse <- function(){fmv}
+     list(set = set, get = get, setInverse = setInverse, getInverse = getInverse)
+}
+cachesolve <- function(x, ...){
+     fmv <- x$getInverse()
+     if(!is.null(fmv)){
+            message("getting cached data")
+            return (fmv)
+     }
+     mat <- x$get()
+     fmv <- solve(mat, ...)
+     x$setInverse(fmv)
+     fmv
+}
